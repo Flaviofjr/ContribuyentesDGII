@@ -3,6 +3,10 @@ namespace ContribuyentesDGII.Data.DBContext
 {
     public partial class ContribuyentesDbContext : DbContext
     {
+        public ContribuyentesDbContext()
+        {
+
+        }
         public ContribuyentesDbContext(DbContextOptions<ContribuyentesDbContext> options) : base(options)
         {
         }
@@ -16,7 +20,7 @@ namespace ContribuyentesDGII.Data.DBContext
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer(InternalConnections.ConnectionString);
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ContribuyentesDB;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ContribuyentesDB;Integrated Security=True;TrustServerCertificate=True");
             }
         }
 

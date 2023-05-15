@@ -10,7 +10,8 @@ namespace ContribuyentesDGII.Core.Models
             Comprobantes = new HashSet<ComprobanteFiscal>();
         }
         [Required(ErrorMessage = "Debe de ingresar un número de cédula o RNC")]
-        public string RncCedula { get; set; }
+        [MaxLength(11, ErrorMessage ="La cedula o RNC no pueden tener mas de 11 dígitos")]
+        public int RncCedula { get; set; }
         [Required(ErrorMessage = "Es obligatorio el nombre del contribuyente")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El campo del tipo de persona es requerido")]

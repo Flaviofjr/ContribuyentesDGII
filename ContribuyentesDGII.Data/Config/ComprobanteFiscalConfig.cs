@@ -7,7 +7,7 @@ namespace ContribuyentesDGII.Data.Config
         {
             builder.ToTable("ComprobantesFiscales");
             builder.HasKey(i => i.NCF);
-            builder.Property(e => e.RncCedula).IsRequired();
+            builder.Property(e => e.RncCedula).HasMaxLength(11).IsRequired();
             builder.Property(e => e.Monto).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(e => e.Itbis18).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(e => e.FechaCreacion).HasColumnType("datetime");

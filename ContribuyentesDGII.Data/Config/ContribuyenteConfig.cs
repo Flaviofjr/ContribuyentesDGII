@@ -7,6 +7,7 @@ namespace ContribuyentesDGII.Data.Config
         {
             builder.ToTable("Contribuyentes");
             builder.HasKey(e => e.RncCedula);
+            builder.Property(e => e.RncCedula).HasMaxLength(11);
             builder.Property(e => e.Nombre).IsRequired();
             builder.Property(e => e.IdTipoPersona).IsRequired();
             builder.Property(e => e.IdEstatus).IsRequired();
