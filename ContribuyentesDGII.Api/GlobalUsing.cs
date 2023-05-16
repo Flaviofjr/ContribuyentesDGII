@@ -5,3 +5,5 @@ global using Microsoft.EntityFrameworkCore;
 global using ContribuyentesDGII.Api.Repositories;
 global using ContribuyentesDGII.Api.Services;
 global using System.Linq.Expressions;
+global using ContribuyentesDGII.Api.Controllers;
+global using System.Text.Json.Serialization;

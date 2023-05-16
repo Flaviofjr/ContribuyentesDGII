@@ -8,6 +8,7 @@ namespace ContribuyentesDGII.Data.DBContext
 {
     public static class InternalConnections
     {
-        public static string ConnectionString { get; set; }
+        public static string? ConnectionString { get; set; }
+        public static string? ApiBaseEndpoint { get; set; }
     }
 }

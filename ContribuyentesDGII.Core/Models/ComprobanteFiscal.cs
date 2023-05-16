@@ -3,10 +3,6 @@ namespace ContribuyentesDGII.Core.Models
 {
     public class ComprobanteFiscal : EntidadBase
     {
-        public ComprobanteFiscal()
-        {
-            Monto = 0m; 
-        }
         private decimal _monto;
         //public int IdCedulation { get; set; }
         [Required(ErrorMessage = "Debe introducir un numero de RNC o Cédula para asociarla al comprobante fiscal.")]
