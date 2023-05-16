@@ -23,6 +23,15 @@ builder.Services.AddScoped<IComprobanteFiscalRepository, ComprobanteFiscalReposi
 builder.Services.AddScoped<IComprobanteFiscalService, ComprobanteFiscalService>();
 builder.Services.AddScoped<EstatusController>();
 builder.Services.AddScoped<TipoPersonasController>();
+//CORS
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("MyCORSPloicy", policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.WithOrigins("https://localhost:7092");
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("MyCORSPloicy");
 app.UseAuthorization();
 
 app.MapControllers();

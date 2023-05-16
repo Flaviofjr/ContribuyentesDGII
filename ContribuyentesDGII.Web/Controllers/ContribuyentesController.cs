@@ -9,18 +9,29 @@ namespace ContribuyentesDGII.Web.Controllers
         public ContribuyentesController(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(InternalConnections.ApiBaseEndpoint);
         }
         public async Task<IActionResult> Index()
         {
             List<ContribuyenteDTO>? contribuyentes = new();
-            HttpResponseMessage response = await _httpClient.GetAsync("Contribuyentes");
-            if (response.IsSuccessStatusCode)
+            using (var httpClient = new HttpClient())
             {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                contribuyentes = JsonSerializer.Deserialize<List<ContribuyenteDTO>>(jsonResponse);
+                using var response = await httpClient.GetAsync(InternalConnections.ApiBaseEndpoint + "Contribuyentes");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                contribuyentes = JsonConvert.DeserializeObject<List<ContribuyenteDTO>>(apiResponse);
             }
             return View(contribuyentes);
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            Contribuyente? contribuyente = new();
+            using (var httpClient = new HttpClient())
+            {
+                using var response = await httpClient.GetAsync(InternalConnections.ApiBaseEndpoint + "Contribuyentes/" + id);
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                contribuyente = JsonConvert.DeserializeObject<Contribuyente>(apiResponse);
+            }
+            return View(contribuyente);
         }
     }
 }

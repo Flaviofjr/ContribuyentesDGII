@@ -1,0 +1,63 @@
+﻿@model Contribuyente
+@{
+    ViewData["Title"] = "Contribuyentes";
+    decimal totalItbis = (decimal)0.00;
+
+}
+
+<div class="text-center">
+    <h4 class="display-5">Información del contribuyente</h4>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12 col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Nombre</h5>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-12 col-xl-12">
+        <table class="table caption-top table-hover">
+            <caption>Comprobantes Fiscales</caption>
+            <thead>
+                <tr>
+                    <th>NCF</th>
+                    <th>Monto</th>
+                    <th>ITBIS (18%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Comprobantes.Count > 0)
+                {
+                    totalItbis = Model.Comprobantes.Sum(i => i.Itbis18);
+                    foreach (var item in Model.Comprobantes)
+                    {
+                        <tr>
+                            <td>
+                                @item.NCF
+                            </td>
+                            <td>
+                                @item.Monto
+                            </td>
+                            <td>
+                                @item.Itbis18.ToString("0.00")
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>@totalItbis.ToString("0.00")</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
