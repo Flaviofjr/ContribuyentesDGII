@@ -3,18 +3,33 @@ namespace ContribuyentesDGII.Core.Models
 {
     public class ComprobanteFiscal : EntidadBase
     {
+        public ComprobanteFiscal()
+        {
+            Monto = 0m; 
+        }
+        private decimal _monto;
+        //public int IdCedulation { get; set; }
+        [Required(ErrorMessage = "Debe introducir un numero de RNC o Cédula para asociarla al comprobante fiscal.")]
+        public string? RncCedula { get; set; }
         [Required]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public int RncCedula { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        [Required]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string NCF { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public decimal Monto { get; set; }
-        public decimal Itbis18 { get; set; }
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public virtual Contribuyente Contribuyente { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public string? NCF { get; set; }
+        public decimal Monto {
+            get => _monto;
+            set
+            {
+                if (value > 0)
+                {
+                    _monto = value;
+                    Itbis18 = _monto * 0.18m; // Calcular el valor del Itbis cuando Monto es agregado
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "El monto debe ser mayor que cero.");
+                }
+            }
+        }
+        public decimal Itbis18 { get ; private set;}
+        [JsonIgnore]
+        public virtual Contribuyente? Contribuyente { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using ContribuyentesDGII.Data.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContribuyentesDGII.Data.Migrations
 {
     [DbContext(typeof(ContribuyentesDbContext))]
-    partial class ContribuyentesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230516003714_AddingAgain")]
+    partial class AddingAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

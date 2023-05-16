@@ -4,6 +4,7 @@ using ContribuyentesDGII.Data.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContribuyentesDGII.Data.Migrations
 {
     [DbContext(typeof(ContribuyentesDbContext))]
-    partial class ContribuyentesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230515221720_ReversingEverything")]
+    partial class ReversingEverything
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,32 +33,30 @@ namespace ContribuyentesDGII.Data.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
 
+                    b.Property<int>("IdCedulation")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Itbis18")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("RncCedula")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
                     b.Property<DateTime>("UltimaFechaModificacion")
                         .HasColumnType("datetime");
 
                     b.HasKey("NCF");
-
-                    b.HasIndex("RncCedula");
 
                     b.ToTable("ComprobantesFiscales", (string)null);
                 });
 
             modelBuilder.Entity("ContribuyentesDGII.Core.Models.Contribuyente", b =>
                 {
-                    b.Property<string>("RncCedula")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                    b.Property<int>("IdCedulation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCedulation"));
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
@@ -73,7 +74,7 @@ namespace ContribuyentesDGII.Data.Migrations
                     b.Property<DateTime>("UltimaFechaModificacion")
                         .HasColumnType("datetime");
 
-                    b.HasKey("RncCedula");
+                    b.HasKey("IdCedulation");
 
                     b.HasIndex("IdEstatus");
 
@@ -130,18 +131,6 @@ namespace ContribuyentesDGII.Data.Migrations
                     b.ToTable("TipoPersonas", (string)null);
                 });
 
-            modelBuilder.Entity("ContribuyentesDGII.Core.Models.ComprobanteFiscal", b =>
-                {
-                    b.HasOne("ContribuyentesDGII.Core.Models.Contribuyente", "Contribuyente")
-                        .WithMany("Comprobantes")
-                        .HasForeignKey("RncCedula")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_ComprobantesFiscales_Contribuyentes_B");
-
-                    b.Navigation("Contribuyente");
-                });
-
             modelBuilder.Entity("ContribuyentesDGII.Core.Models.Contribuyente", b =>
                 {
                     b.HasOne("ContribuyentesDGII.Core.Models.Estatus", "Estatus")
@@ -161,11 +150,6 @@ namespace ContribuyentesDGII.Data.Migrations
                     b.Navigation("Estatus");
 
                     b.Navigation("Tipo");
-                });
-
-            modelBuilder.Entity("ContribuyentesDGII.Core.Models.Contribuyente", b =>
-                {
-                    b.Navigation("Comprobantes");
                 });
 
             modelBuilder.Entity("ContribuyentesDGII.Core.Models.Estatus", b =>

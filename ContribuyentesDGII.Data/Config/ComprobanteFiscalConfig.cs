@@ -16,7 +16,7 @@ namespace ContribuyentesDGII.Data.Config
             builder.HasOne(fk => fk.Contribuyente)
                 .WithMany(c => c.Comprobantes)
                 .HasForeignKey(i => i.RncCedula)
-                .HasConstraintName("FK_ComprobantesFiscales_Contribuyentes");
+                .HasConstraintName("FK_ComprobantesFiscales_Contribuyentes_B");
         }
     }
 }

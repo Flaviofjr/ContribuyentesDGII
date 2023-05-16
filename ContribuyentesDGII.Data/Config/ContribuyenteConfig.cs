@@ -6,6 +6,7 @@ namespace ContribuyentesDGII.Data.Config
         public void Configure(EntityTypeBuilder<Contribuyente> builder)
         {
             builder.ToTable("Contribuyentes");
+            //builder.HasKey(i => i.IdCedulation);
             builder.HasKey(e => e.RncCedula);
             builder.Property(e => e.RncCedula).HasMaxLength(11);
             builder.Property(e => e.Nombre).IsRequired();
