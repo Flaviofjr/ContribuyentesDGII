@@ -1,5 +1,4 @@
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,10 +6,8 @@ builder.Services.AddControllersWithViews();
 var baseUrl = builder.Configuration.GetSection("ApiPath")["BaseUrl"];
 InternalConnections.ApiBaseEndpoint = baseUrl;
 
-builder.Services.AddHttpClient<HttpClient>(client =>
-{
-    client.BaseAddress = new Uri(baseUrl);
-});
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IClientApiService, ClientApiService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

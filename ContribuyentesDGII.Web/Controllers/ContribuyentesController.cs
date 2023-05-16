@@ -5,32 +5,20 @@ namespace ContribuyentesDGII.Web.Controllers
 {
     public class ContribuyentesController : Controller
     {
-        private readonly HttpClient _httpClient;
-        public ContribuyentesController(IHttpClientFactory httpClientFactory)
+        private readonly IClientApiService _clientApiService;
+        public ContribuyentesController(IClientApiService clientApiService)
         {
-            _httpClient = httpClientFactory.CreateClient();
+            _clientApiService = clientApiService;
         }
         public async Task<IActionResult> Index()
         {
-            List<ContribuyenteDTO>? contribuyentes = new();
-            using (var httpClient = new HttpClient())
-            {
-                using var response = await httpClient.GetAsync(InternalConnections.ApiBaseEndpoint + "Contribuyentes");
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                contribuyentes = JsonConvert.DeserializeObject<List<ContribuyenteDTO>>(apiResponse);
-            }
+            List<ContribuyenteDTO>? contribuyentes = await _clientApiService.Get<List<ContribuyenteDTO>>("Contribuyentes");
             return View(contribuyentes);
         }
 
         public async Task<IActionResult> Details(string id)
         {
-            Contribuyente? contribuyente = new();
-            using (var httpClient = new HttpClient())
-            {
-                using var response = await httpClient.GetAsync(InternalConnections.ApiBaseEndpoint + "Contribuyentes/" + id);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                contribuyente = JsonConvert.DeserializeObject<Contribuyente>(apiResponse);
-            }
+            Contribuyente? contribuyente = await _clientApiService.Get<Contribuyente>("Contribuyentes/" + id);
             return View(contribuyente);
         }
     }

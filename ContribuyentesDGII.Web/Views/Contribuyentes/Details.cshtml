@@ -11,16 +11,32 @@
 
 <div class="row mt-4">
     <div class="col-md-12 col-xl-12">
-        <div class="card">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Nombre</h5>
-                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="card-title">RNC/CÉDULA</h5>
+                        <p>@Model?.RncCedula</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Tipo</h5>
+                        <p>@Model?.Tipo?.DescripcionPersona</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Nombre</h5>
+                        <p>@Model?.Nombre</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Estatus</h5>
+                        <p>@Model?.Estatus?.Descripcion</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-3">
     <div class="col-md-12 col-xl-12">
         <table class="table caption-top table-hover">
             <caption>Comprobantes Fiscales</caption>
@@ -55,9 +71,12 @@
                 <tr>
                     <th></th>
                     <th></th>
-                    <th>@totalItbis.ToString("0.00")</th>
+                    <th>@if (totalItbis > 0) { @totalItbis.ToString("0.00")}</th>
                 </tr>
             </tfoot>
         </table>
+        <div class="form-group text-end">
+            <a asp-action="Index" class="btn btn-primary">Volver</a>
+        </div>
     </div>
 </div>

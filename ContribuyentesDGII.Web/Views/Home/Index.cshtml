@@ -1,19 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenidos</h1>
+    <p>Esta aplicación web fue creada en respuesta a la <i>Prueba Técnica </i> 
+        enviada por la Dirección General de Impuestos Internos (DGII) para cubrir la vacante de <i>Analista Programador.</i></p>
+    <p>Haga click en <b><a class="text-dark" asp-area="" asp-controller="Contribuyentes" asp-action="Index">Contribuyentes</a></b> para iniciar.</p>
 </div>
-
-@*@section scripts{
-    <script type="text/javascript">
-        fetch("https://localhost:7261/api/Contribuyentes")
-        .then( (response) => response.json())
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => console.log(error));
-    </script>
-}*@

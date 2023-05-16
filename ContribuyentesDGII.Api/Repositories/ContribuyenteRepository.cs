@@ -41,6 +41,8 @@ namespace ContribuyentesDGII.Api.Repositories
         public async Task<Contribuyente?> GetContribuyente(string rncCedula)
         {
             var contribuyente = await _contribuyentesDbContext.Contribuyentes
+                .Include(e => e.Estatus)
+                .Include(t => t.Tipo)
                 .Include(c => c.Comprobantes)
                 .FirstOrDefaultAsync(r => r.RncCedula == rncCedula);
             if (contribuyente == null)
@@ -52,7 +54,7 @@ namespace ContribuyentesDGII.Api.Repositories
 
         public async Task<Contribuyente> AddContribuyente(Contribuyente contribuyente)
         {
-            var result = await _contribuyentesDbContext.Contribuyentes.AddAsync(contribuyente);
+            var result = _contribuyentesDbContext.Contribuyentes.Add(contribuyente);
             _contribuyentesDbContext.SaveChanges();
             return result.Entity;
         }

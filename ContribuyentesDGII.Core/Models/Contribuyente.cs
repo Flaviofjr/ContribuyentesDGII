@@ -17,9 +17,7 @@ namespace ContribuyentesDGII.Core.Models
         public short IdTipoPersona { get; set; }
         [Required(ErrorMessage = "El campo del estatus es requerido")]
         public short IdEstatus { get; set; }
-        [JsonIgnore]
         public virtual TipoPersona? Tipo { get; set; }
-        [JsonIgnore]
         public virtual Estatus? Estatus { get; set; }
         public virtual ICollection<ComprobanteFiscal> Comprobantes { get; set; }
     }
