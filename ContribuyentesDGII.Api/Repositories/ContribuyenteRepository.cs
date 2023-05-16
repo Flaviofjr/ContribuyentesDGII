@@ -5,10 +5,10 @@ namespace ContribuyentesDGII.Api.Repositories
     public interface IContribuyenteRepository
     {
         Task<IEnumerable<ContribuyenteDTO>> GetContribuyentes();
-        //Task<Contribuyente?> GetContribuyente(string rncCedula);
+        Task<Contribuyente?> GetContribuyente(string rncCedula);
         Task<Contribuyente> AddContribuyente(Contribuyente contribuyente);
-        //Task<Contribuyente?> UpdateContribuyente(string rnCedula, Contribuyente contribuyente);
-        //Task<bool> DeleteContribuyente(string rncCedula);
+        Task<Contribuyente?> UpdateContribuyente(string rnCedula, Contribuyente contribuyente);
+        Task<bool> DeleteContribuyente(string rncCedula);
     }
     public class ContribuyenteRepository : IContribuyenteRepository
     {
@@ -28,7 +28,7 @@ namespace ContribuyentesDGII.Api.Repositories
             {
                 var c = new ContribuyenteDTO
                 {
-                   // RncCedula = item.RncCedula,
+                    RncCedula = item.RncCedula,
                     Nombre = item.Nombre,
                     Tipo = item.Tipo?.DescripcionPersona,
                     Estatus = item.Estatus?.Descripcion
@@ -38,17 +38,17 @@ namespace ContribuyentesDGII.Api.Repositories
             return contribuyentes.ToList();
         }
 
-        //public async Task<Contribuyente?> GetContribuyente(string rncCedula)
-        //{
-        //    var contribuyente = await _contribuyentesDbContext.Contribuyentes
-        //        //.Include(c => c.Comprobantes)
-        //        .FirstOrDefaultAsync(r => r.RncCedula == rncCedula);
-        //    if (contribuyente == null)
-        //    {
-        //        return null;
-        //    }
-        //    return contribuyente;
-        //}
+        public async Task<Contribuyente?> GetContribuyente(string rncCedula)
+        {
+            var contribuyente = await _contribuyentesDbContext.Contribuyentes
+                .Include(c => c.Comprobantes)
+                .FirstOrDefaultAsync(r => r.RncCedula == rncCedula);
+            if (contribuyente == null)
+            {
+                return null;
+            }
+            return contribuyente;
+        }
 
         public async Task<Contribuyente> AddContribuyente(Contribuyente contribuyente)
         {
@@ -56,30 +56,29 @@ namespace ContribuyentesDGII.Api.Repositories
             _contribuyentesDbContext.SaveChanges();
             return result.Entity;
         }
-        //public async Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente)
-        //{
-        //    //_contribuyentesDbContext.Set<Contribuyente>().Update(contribuyente); //testing
-        //    var existingContribuyente = await _contribuyentesDbContext.Set<Contribuyente>().FindAsync(rncCedula);
-        //    if (existingContribuyente == null)
-        //    {
-        //        return null;
-        //    }
-        //    _contribuyentesDbContext.Entry(existingContribuyente).CurrentValues.SetValues(contribuyente);
-        //    _contribuyentesDbContext.SaveChanges();
-        //    return existingContribuyente;
-        //}
+        public async Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente)
+        {
+            var existingContribuyente = await _contribuyentesDbContext.Set<Contribuyente>().FindAsync(rncCedula);
+            if (existingContribuyente == null)
+            {
+                return null;
+            }
+            _contribuyentesDbContext.Entry(existingContribuyente).CurrentValues.SetValues(contribuyente);
+            _contribuyentesDbContext.SaveChanges();
+            return existingContribuyente;
+        }
 
-        //public async Task<bool> DeleteContribuyente(string rncCedula)
-        //{
-        //    var entity = await _contribuyentesDbContext.Set<Contribuyente>().FindAsync(rncCedula);
-        //    if (entity == null)
-        //    {
-        //        return false;
-        //    }
+        public async Task<bool> DeleteContribuyente(string rncCedula)
+        {
+            var contribuyente = await _contribuyentesDbContext.Set<Contribuyente>().FindAsync(rncCedula);
+            if (contribuyente == null)
+            {
+                return false;
+            }
 
-        //    _contribuyentesDbContext.Set<Contribuyente>().Remove(entity);
-        //    _contribuyentesDbContext.SaveChanges();
-        //    return true;
-        //}
+            _contribuyentesDbContext.Set<Contribuyente>().Remove(contribuyente);
+            _contribuyentesDbContext.SaveChanges();
+            return true;
+        }
     }
 }

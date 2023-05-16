@@ -17,6 +17,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IContribuyenteRepository, ContribuyenteRepository>();
 builder.Services.AddScoped<IContribuyenteService, ContribuyenteService>();
+builder.Services.AddScoped<IComprobanteFiscalRepository, ComprobanteFiscalRepository>();
+builder.Services.AddScoped<IComprobanteFiscalService, ComprobanteFiscalService>();
 builder.Services.AddScoped<EstatusController>();
 builder.Services.AddScoped<TipoPersonasController>();
 var app = builder.Build();

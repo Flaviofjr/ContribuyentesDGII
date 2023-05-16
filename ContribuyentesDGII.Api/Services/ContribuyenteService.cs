@@ -3,10 +3,10 @@
     public interface IContribuyenteService
     {
         Task<IEnumerable<ContribuyenteDTO>> GetContribuyentes();
-        //Task<Contribuyente?> GetContribuyente(string rncCedula);
+        Task<Contribuyente?> GetContribuyente(string rncCedula);
         Task<Contribuyente> AddContribuyente(Contribuyente contribuyente);
-        //Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente);
-        //Task<bool> DeleteContribuyente(string rncCedula);
+        Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente);
+        Task<bool> DeleteContribuyente(string rncCedula);
     }
     public class ContribuyenteService : IContribuyenteService
     {
@@ -19,10 +19,10 @@
         {
             return await _contribuyenteRepository.GetContribuyentes();
         }
-        //public async Task<Contribuyente?> GetContribuyente(string rncCedula)
-        //{
-        //    return await _contribuyenteRepository.GetContribuyente(rncCedula);
-        //}
+        public async Task<Contribuyente?> GetContribuyente(string rncCedula)
+        {
+            return await _contribuyenteRepository.GetContribuyente(rncCedula);
+        }
 
         public async Task<Contribuyente> AddContribuyente(Contribuyente contribuyente)
         {
@@ -30,14 +30,14 @@
             return newContribuyente;
         }
 
-        //public async Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente)
-        //{
-        //    var updatedContribuyente = await _contribuyenteRepository.UpdateContribuyente(rncCedula, contribuyente);
-        //    return updatedContribuyente;
-        //}
-        //public async Task<bool> DeleteContribuyente(string rncCedula)
-        //{
-        //    return await _contribuyenteRepository.DeleteContribuyente(rncCedula);
-        //}
+        public async Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente)
+        {
+            var updatedContribuyente = await _contribuyenteRepository.UpdateContribuyente(rncCedula, contribuyente);
+            return updatedContribuyente;
+        }
+        public async Task<bool> DeleteContribuyente(string rncCedula)
+        {
+            return await _contribuyenteRepository.DeleteContribuyente(rncCedula);
+        }
     }
 }
