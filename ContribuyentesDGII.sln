@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContribuyentesDGII.Web", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContribuyentesDGII.Tests", "ContribuyentesDGII.Tests\ContribuyentesDGII.Tests.csproj", "{0BA8D6DD-26F0-4429-84B5-5F3730DC867F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentación", "Documentación", "{12362AA2-DA7D-40FB-BE6F-C1D117232F3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -24,7 +24,7 @@ namespace ContribuyentesDGII.Core.Models
                 }
             }
         }
-        public decimal Itbis18 { get ; private set;}
+        public decimal Itbis18 { get ; set;}
         [JsonIgnore]
         public virtual Contribuyente? Contribuyente { get; set; }
     }
