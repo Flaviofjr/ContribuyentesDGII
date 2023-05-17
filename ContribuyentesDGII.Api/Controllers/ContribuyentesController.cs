@@ -32,12 +32,23 @@ namespace ContribuyentesDGII.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Contribuyente>> Create(Contribuyente contribuyente)
         {
+            var RncCedulaExists = _contribuyenteService.RncCedulaExists(contribuyente.RncCedula);
+            if (RncCedulaExists)
+            {
+                ModelState.AddModelError(nameof(contribuyente.RncCedula), "El número de RNC/CEDULA ingresado ya existe.");
+                return BadRequest(ModelState);
+            }
             var createdEntity = await _contribuyenteService.AddContribuyente(contribuyente);
             return CreatedAtAction("GetById", new { id = createdEntity.RncCedula }, createdEntity);
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<Contribuyente>> Update(string id, Contribuyente contribuyente)
         {
+            if (id != contribuyente.RncCedula)
+            {
+                ModelState.AddModelError(nameof(contribuyente.RncCedula), "El numero de RNC/CÉDULA no puede ser modificado.");
+                return BadRequest(ModelState);
+            }
             var updatedContribuyente = await _contribuyenteService.UpdateContribuyente(id, contribuyente);
             if (updatedContribuyente == null)
             {

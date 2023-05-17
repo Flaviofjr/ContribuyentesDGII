@@ -7,6 +7,7 @@
         Task<ComprobanteFiscal> AddComprobante(ComprobanteFiscal comprobante);
         Task<ComprobanteFiscal?> UpdateComprobante(string ncf, ComprobanteFiscal comprobante);
         Task<bool> DeleteComprobante(string ncf);
+        bool NcfExists(string? ncf);
     }
     public class ComprobanteFiscalRepository : IComprobanteFiscalRepository
     {
@@ -54,10 +55,14 @@
             {
                 return false;
             }
-
             _contribuyentesDbContext.Set<ComprobanteFiscal>().Remove(comprobante);
             _contribuyentesDbContext.SaveChanges();
             return true;
+        }
+
+        public bool NcfExists(string? ncf)
+        {
+            return _contribuyentesDbContext.ComprobantesFiscales.Any(n => n.NCF == ncf);   
         }
     }
 }

@@ -1,0 +1,12 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using ContribuyentesDGII.Api.Controllers;
+global using ContribuyentesDGII.Api.Services;
+global using Xunit;
+global using ContribuyentesDGII.Core.DTOs;
+global using Moq;
+global using Microsoft.AspNetCore.Mvc;
+global using ContribuyentesDGII.Core.Models;
+global using Microsoft.Extensions.Logging;

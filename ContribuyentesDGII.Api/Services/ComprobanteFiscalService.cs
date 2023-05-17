@@ -7,6 +7,7 @@
         Task<ComprobanteFiscal> AddComprobante(ComprobanteFiscal comprobante);
         Task<ComprobanteFiscal?> UpdateComprobante(string ncf, ComprobanteFiscal comprobante);
         Task<bool> DeleteComprobante(string ncf);
+        bool NcfExists(string? ncf);
     }
     public class ComprobanteFiscalService : IComprobanteFiscalService
     {
@@ -34,6 +35,11 @@
         public async Task<IEnumerable<ComprobanteFiscal>> GetComprobantes()
         {
             return await _comprobanteRepository.GetComprobantes();
+        }
+
+        public bool NcfExists(string? ncf)
+        {
+            return _comprobanteRepository.NcfExists(ncf);
         }
 
         public async Task<ComprobanteFiscal?> UpdateComprobante(string ncf, ComprobanteFiscal comprobante)

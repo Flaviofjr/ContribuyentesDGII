@@ -7,6 +7,7 @@
         Task<Contribuyente> AddContribuyente(Contribuyente contribuyente);
         Task<Contribuyente?> UpdateContribuyente(string rncCedula, Contribuyente contribuyente);
         Task<bool> DeleteContribuyente(string rncCedula);
+        bool RncCedulaExists(string? rncCedula);
     }
     public class ContribuyenteService : IContribuyenteService
     {
@@ -38,6 +39,10 @@
         public async Task<bool> DeleteContribuyente(string rncCedula)
         {
             return await _contribuyenteRepository.DeleteContribuyente(rncCedula);
+        }
+        public bool RncCedulaExists(string? rncCedula)
+        {
+            return _contribuyenteRepository.RncCedulaExists(rncCedula);
         }
     }
 }

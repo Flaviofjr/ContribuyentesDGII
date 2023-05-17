@@ -9,6 +9,7 @@ namespace ContribuyentesDGII.Api.Repositories
         Task<Contribuyente> AddContribuyente(Contribuyente contribuyente);
         Task<Contribuyente?> UpdateContribuyente(string rnCedula, Contribuyente contribuyente);
         Task<bool> DeleteContribuyente(string rncCedula);
+        bool RncCedulaExists(string? rncCedula);
     }
     public class ContribuyenteRepository : IContribuyenteRepository
     {
@@ -77,10 +78,13 @@ namespace ContribuyentesDGII.Api.Repositories
             {
                 return false;
             }
-
             _contribuyentesDbContext.Set<Contribuyente>().Remove(contribuyente);
             _contribuyentesDbContext.SaveChanges();
             return true;
+        }
+        public bool RncCedulaExists(string? rncCedula)
+        {
+            return _contribuyentesDbContext.Contribuyentes.Any(n => n.RncCedula == rncCedula);
         }
     }
 }
