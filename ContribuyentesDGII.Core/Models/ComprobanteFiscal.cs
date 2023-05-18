@@ -7,8 +7,9 @@ namespace ContribuyentesDGII.Core.Models
         //public int IdCedulation { get; set; }
         [Required(ErrorMessage = "Debe introducir un numero de RNC o Cédula para asociarla al comprobante fiscal.")]
         public string? RncCedula { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Debe introducir un numero de comprobante fiscal único.")]
         public string? NCF { get; set; }
+        [Required(ErrorMessage = "Debe introducir un monto.")]
         public decimal Monto {
             get => _monto;
             set
@@ -24,7 +25,7 @@ namespace ContribuyentesDGII.Core.Models
                 }
             }
         }
-        public decimal Itbis18 { get ; set;}
+        public decimal Itbis18 { get ; private set;}
         [JsonIgnore]
         public virtual Contribuyente? Contribuyente { get; set; }
     }

@@ -8,7 +8,7 @@ namespace ContribuyentesDGII.Core.Models
             Contribuyentes = new HashSet<Contribuyente>();
         }
         public short IdEstatus { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Debe ingresar una descripcion de estado")]
         [MaxLength(50,ErrorMessage ="La descripción del estatus no puede tener mas de 50 caracteres")]
         public string Descripcion { get; set; }
         [JsonIgnore]

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿
 
 namespace ContribuyentesDGII.Api.Controllers
 {
@@ -8,9 +7,11 @@ namespace ContribuyentesDGII.Api.Controllers
     public class ContribuyentesController : ControllerBase
     {
         private readonly IContribuyenteService _contribuyenteService;
-        public ContribuyentesController(IContribuyenteService contribuyenteService)
+        private readonly ILogger<ContribuyentesController> _logger;
+        public ContribuyentesController(IContribuyenteService contribuyenteService, ILogger<ContribuyentesController> logger)
         {
             _contribuyenteService = contribuyenteService;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContribuyenteDTO>>> GetAll()
@@ -32,29 +33,54 @@ namespace ContribuyentesDGII.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Contribuyente>> Create(Contribuyente contribuyente)
         {
-            var RncCedulaExists = _contribuyenteService.RncCedulaExists(contribuyente.RncCedula);
-            if (RncCedulaExists)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(nameof(contribuyente.RncCedula), "El número de RNC/CEDULA ingresado ya existe.");
                 return BadRequest(ModelState);
             }
-            var createdEntity = await _contribuyenteService.AddContribuyente(contribuyente);
-            return CreatedAtAction("GetById", new { id = createdEntity.RncCedula }, createdEntity);
+            try
+            {
+                var RncCedulaExists = _contribuyenteService.RncCedulaExists(contribuyente.RncCedula);
+                if (RncCedulaExists)
+                {
+                    ModelState.AddModelError(nameof(contribuyente.RncCedula), "El número de RNC/CEDULA ingresado ya existe.");
+                    return BadRequest(ModelState);
+                }
+                var createdEntity = await _contribuyenteService.AddContribuyente(contribuyente);
+                return CreatedAtAction("GetById", new { id = createdEntity.RncCedula }, createdEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ocurrido mientras se creaba un contribuyente.");
+                return StatusCode(500, "Un error ha ocurrido mientras se creaba el contribuyente. Por favor inténtelo mas tarde.");
+            }
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<Contribuyente>> Update(string id, Contribuyente contribuyente)
         {
-            if (id != contribuyente.RncCedula)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(nameof(contribuyente.RncCedula), "El numero de RNC/CÉDULA no puede ser modificado.");
                 return BadRequest(ModelState);
             }
-            var updatedContribuyente = await _contribuyenteService.UpdateContribuyente(id, contribuyente);
-            if (updatedContribuyente == null)
+            try
             {
-                return NotFound();
+                if (id != contribuyente.RncCedula)
+                {
+                    ModelState.AddModelError(nameof(contribuyente.RncCedula), "El numero de RNC/CÉDULA no puede ser modificado.");
+                    return BadRequest(ModelState);
+                }
+                var updatedContribuyente = await _contribuyenteService.UpdateContribuyente(id, contribuyente);
+                if (updatedContribuyente == null)
+                {
+                    _logger.LogWarning($"Contribuyente con RNC/CEDULA {id} no encontrado");
+                    return NotFound();
+                }
+                return Ok(updatedContribuyente);
             }
-            return Ok(updatedContribuyente);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ocurrido mientras se actualizaba un contribuyente.");
+                return StatusCode(500, "Un error ha ocurrido mientras se actualizaban los datos del contribuyente. Por favor inténtelo mas tarde.");
+            }
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)

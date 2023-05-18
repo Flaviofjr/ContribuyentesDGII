@@ -10,3 +10,5 @@ global using Moq;
 global using Microsoft.AspNetCore.Mvc;
 global using ContribuyentesDGII.Core.Models;
 global using Microsoft.Extensions.Logging;
+global using AutoMapper;
+global using ContribuyentesDGII.Core;

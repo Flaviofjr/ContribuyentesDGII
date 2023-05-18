@@ -8,7 +8,7 @@ namespace ContribuyentesDGII.Core.Models
             Contribuyentes = new HashSet<Contribuyente>();
         }
         public short IdTipoPersona { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Debe ingresar una descripcion para el tipo de persona")]
         [MaxLength(150, ErrorMessage = "La descripción del tipo de persona no puede tener mas de 150 caracteres")]
         public string? DescripcionPersona { get; set; }
         [JsonIgnore]

@@ -8,3 +8,6 @@ global using System.Linq.Expressions;
 global using ContribuyentesDGII.Api.Controllers;
 global using System.Text.Json.Serialization;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore.Mvc;
+global using ContribuyentesDGII.Core;
+global using AutoMapper;

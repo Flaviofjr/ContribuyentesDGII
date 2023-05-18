@@ -15,6 +15,7 @@ var dbConnection = builder.Configuration.GetConnectionString("DGIIConnection");
 InternalConnections.ConnectionString = dbConnection;
 builder.Services.AddDbContext<ContribuyentesDbContext>(options =>
     options.UseSqlServer(dbConnection));
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IContribuyenteRepository, ContribuyenteRepository>();

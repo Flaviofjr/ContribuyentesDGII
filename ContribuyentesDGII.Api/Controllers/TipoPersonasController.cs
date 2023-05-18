@@ -7,7 +7,7 @@ namespace ContribuyentesDGII.Api.Controllers
     [ApiController]
     public class TipoPersonasController : GenericController<TipoPersona>
     {
-        public TipoPersonasController(IGenericService<TipoPersona> service) : base(service)
+        public TipoPersonasController(IGenericService<TipoPersona> service, ILogger<GenericController<TipoPersona>> logger) : base(service, logger)
         {
         }
     }

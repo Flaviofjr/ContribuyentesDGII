@@ -9,9 +9,11 @@ namespace ContribuyentesDGII.Api.Controllers
     public class GenericController<T> : ControllerBase where T : class
     {
         private readonly IGenericService<T> _service;
-        public GenericController(IGenericService<T> service)
+        private readonly ILogger<GenericController<T>> _logger;
+        public GenericController(IGenericService<T> service, ILogger<GenericController<T>> logger)
         {
             _service = service;
+            _logger = logger;
         }
         // GET: api/<GenericController>
         [HttpGet]
@@ -37,8 +39,20 @@ namespace ContribuyentesDGII.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<T>> Create(T entity)
         {
-            var createdEntity = await _service.Create(entity);
-            return createdEntity;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var createdEntity = await _service.Create(entity);
+                return createdEntity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error ocurrido mientras se ingresaba un nuevo registro. {ex.Message}");
+                return StatusCode(500, $"Un error ha ocurrido mientras se creaba un registro. {ex.Message}");
+            }
         }
 
 
@@ -46,24 +60,45 @@ namespace ContribuyentesDGII.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<T>> Update(int id, T entity)
         {
-            var updatedEntity = await _service.Update(id, entity);
-            if (updatedEntity == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
-            return Ok(updatedEntity);
+            try
+            {
+                var updatedEntity = await _service.Update(id, entity);
+                if (updatedEntity == null)
+                {
+                    return NotFound();
+                }
+                return Ok(updatedEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error ocurrido mientras se actualizaba registro. {ex.Message}");
+                return StatusCode(500, $"Un error ha ocurrido mientras se actualizaba un registro. {ex.Message}");
+            }
         }
 
         // DELETE api/<GenericController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var result = await _service.Delete(id);
-            if (!result)
+            try
             {
-                return NotFound();
+                var result = await _service.Delete(id);
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error ocurrido mientras se eliminaba un registro. {ex.Message}");
+                return StatusCode(500, $"Un error ha ocurrido mientras se eliminaba un registro. {ex.Message}");
+            }
+            
         }
     }
 }

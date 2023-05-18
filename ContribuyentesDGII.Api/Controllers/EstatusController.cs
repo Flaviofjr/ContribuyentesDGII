@@ -8,7 +8,7 @@ namespace ContribuyentesDGII.Api.Controllers
     [ApiController]
     public class EstatusController : GenericController<Estatus>
     {
-        public EstatusController(IGenericService<Estatus> service) : base(service)
+        public EstatusController(IGenericService<Estatus> service, ILogger<GenericController<Estatus>> logger) : base(service, logger)
         {
         }
     }
