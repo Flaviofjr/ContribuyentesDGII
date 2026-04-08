@@ -1,17 +1,23 @@
-# ContribuyentesDGII
+Ôªø# ContribuyentesDGII
 
 A .NET6 solution that provides a Razor Pages web frontend and a Web API for managing contributor information (Contribuyentes). This repository contains multiple projects separated by responsibility.
 
+---
+
 ## Projects
-- `ContribuyentesDGII.Web` ó Razor Pages web application (frontend)
-- `ContribuyentesDGII.Api` ó ASP.NET Core Web API
-- `ContribuyentesDGII.Core` ó Core domain and business logic
-- `ContribuyentesDGII.Data` ó Data access layer (repositories, EF Core models)
-- `ContribuyentesDGII.Tests` ó Unit and integration tests
+- `ContribuyentesDGII.Web` ‚Äî Razor Pages web application (frontend)
+- `ContribuyentesDGII.Api` ‚Äî ASP.NET Core Web API
+- `ContribuyentesDGII.Core` ‚Äî Core domain and business logic
+- `ContribuyentesDGII.Data` ‚Äî Data access layer (repositories, EF Core models)
+- `ContribuyentesDGII.Tests` ‚Äî Unit and integration tests
+
+---
 
 ## Requirements
 - .NET6 SDK
 - (Optional) SQL Server / LocalDB or a supported database for development
+
+---
 
 ## Quick start
 1. Clone the repository
@@ -40,17 +46,24 @@ A .NET6 solution that provides a Razor Pages web frontend and a Web API for mana
  dotnet test ./ContribuyentesDGII.Tests
  ```
 
+ ---
+
 ## Development notes
 - The solution targets `.NET6`.
-- The Razor Pages site is implemented under `ContribuyentesDGII.Web` ó prioritize this project for UI changes.
+- The Razor Pages site is implemented under `ContribuyentesDGII.Web` ‚Äî prioritize this project for UI changes.
 - Business logic and domain models live in `ContribuyentesDGII.Core` and data access under `ContribuyentesDGII.Data`.
 
+---
+
 ## Contributing
-- Fork the repository and create a feature branch.
-- Follow existing code style and run tests before submitting a pull request.
-
-## License
-This repository does not include a license file. Add a `LICENSE` file if you intend to make this project open source.
-
-## Contact
-For questions about the codebase, open an issue in this repository.
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+ 
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+ 
+---
+ 
+*Built with ‚ù§Ô∏è using C# and .NET Core*
