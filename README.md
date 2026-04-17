@@ -53,18 +53,52 @@ dotnet ef database update --project ContribuyentesDGII.Data --startup-project Co
 dotnet ef database update <MigrationName> --project ContribuyentesDGII.Data --startup-project ContribuyentesDGII.Web
 ```
 
+5. Seed test data (optional)
+
+A seed script is included at `ContribuyentesDGII.Data/Scripts/Seed-Test-Data.sql`. Run it against the same database you updated with migrations to populate sample data for testing. Choose one of the following methods depending on your environment:
+
+- Using `sqlcmd` (cross-platform; SQL Server tooling must be installed):
+
+```powershell
+# SQL Server (provide server, database and credentials as needed)
+sqlcmd -S <server> -d <database> -U <username> -P <password> -i "ContribuyentesDGII.Data\Scripts\Seed-Test-Data.sql"
+
+# LocalDB (Windows)
+sqlcmd -S (localdb)\\MSSQLLocalDB -d <database> -i "ContribuyentesDGII.Data\Scripts\Seed-Test-Data.sql"
+```
+
+- Using PowerShell with `Invoke-Sqlcmd` (requires SqlServer module):
+
+```powershell
+# Example using LocalDB
+Install-Module SqlServer -Scope CurrentUser -Force # if needed
+Invoke-Sqlcmd -ServerInstance "(localdb)\\MSSQLLocalDB" -Database "<database>" -InputFile "ContribuyentesDGII.Data\Scripts\Seed-Test-Data.sql"
+
+# Example using SQL Server auth
+Invoke-Sqlcmd -ServerInstance "<server>" -Database "<database>" -Username "<username>" -Password "<password>" -InputFile "ContribuyentesDGII.Data\Scripts\Seed-Test-Data.sql"
+```
+
+- Using SQL Server Management Studio (SSMS) or Azure Data Studio:
+1. Open `ContribuyentesDGII.Data/Scripts/Seed-Test-Data.sql` in the editor.
+2. Connect to the same database used when applying migrations.
+3. Execute the script.
+
+Important
+- Ensure the connection string in the Web/API project points to the database where you applied migrations before running the seed script.
+- The seed script assumes the tables and schema from the applied migrations already exist.
+
 Notes
 - The `--project` option points to the project that contains the migrations (`ContribuyentesDGII.Data`).
 - The `--startup-project` option points to the project that contains the application's configuration and the `DbContext` configuration (`ContribuyentesDGII.Web`).
 - If your `DbContext` or configuration lives in a different project, adjust the `--project` and `--startup-project` values accordingly.
 
-5. Run the API and Web projects (from solution root)
+6. Run the API and Web projects (from solution root)
  ```bash
  dotnet run --project ContribuyentesDGII.Api
  dotnet run --project ContribuyentesDGII.Web
  ```
 
-6. Run tests
+7. Run tests
  ```bash
  dotnet test ./ContribuyentesDGII.Tests
  ```
