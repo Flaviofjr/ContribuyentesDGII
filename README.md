@@ -27,15 +27,44 @@ A .NET6 solution that provides a Razor Pages web frontend and a Web API for mana
  ```
 
 3. Configure database connection
-- Edit connection strings in `ContribuyentesDGII.Api/appsettings.json` and/or `ContribuyentesDGII.Web/appsettings.json` to point to your database instance. If the solution uses EF Core migrations, apply them before running.
+- Edit connection strings in `ContribuyentesDGII.Api/appsettings.json` and/or `ContribuyentesDGII.Web/appsettings.json` to point to your database instance.
 
-4. Run the API and Web projects (from solution root)
+4. Apply EF Core migrations (from repository root)
+
+- (Optional) Install or update the EF Core CLI tool if you don't have it:
+```powershell
+dotnet tool install --global dotnet-ef --version7.*
+# or update if already installed
+dotnet tool update --global dotnet-ef --version7.*
+```
+
+- Verify available migrations:
+```powershell
+dotnet ef migrations list --project ContribuyentesDGII.Data --startup-project ContribuyentesDGII.Web
+```
+
+- Apply all pending migrations to the configured database:
+```powershell
+dotnet ef database update --project ContribuyentesDGII.Data --startup-project ContribuyentesDGII.Web
+```
+
+- To apply a specific migration by name:
+```powershell
+dotnet ef database update <MigrationName> --project ContribuyentesDGII.Data --startup-project ContribuyentesDGII.Web
+```
+
+Notes
+- The `--project` option points to the project that contains the migrations (`ContribuyentesDGII.Data`).
+- The `--startup-project` option points to the project that contains the application's configuration and the `DbContext` configuration (`ContribuyentesDGII.Web`).
+- If your `DbContext` or configuration lives in a different project, adjust the `--project` and `--startup-project` values accordingly.
+
+5. Run the API and Web projects (from solution root)
  ```bash
  dotnet run --project ContribuyentesDGII.Api
  dotnet run --project ContribuyentesDGII.Web
  ```
 
-5. Run tests
+6. Run tests
  ```bash
  dotnet test ./ContribuyentesDGII.Tests
  ```
