@@ -1,5 +1,4 @@
-﻿
-namespace ContribuyentesDGII.Data.DBContext
+﻿namespace ContribuyentesDGII.Data.DBContext
 {
     public partial class ContribuyentesDbContext : DbContext
     {
@@ -19,8 +18,16 @@ namespace ContribuyentesDGII.Data.DBContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer(InternalConnections.ConnectionString);
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ContribuyentesDB;Integrated Security=True;TrustServerCertificate=True");
+                // Prefer connection string set by the application (InternalConnections)
+                var conn = InternalConnections.ConnectionString
+                 ?? Environment.GetEnvironmentVariable("ConnectionStrings__DGIIConnection");
+
+                if (!string.IsNullOrEmpty(conn))
+                {
+                    optionsBuilder.UseSqlServer(conn);
+                }
+                // If no connection string is available, do not configure here. The application
+                // should register the DbContext with AddDbContext and pass the connection.
             }
         }
 
